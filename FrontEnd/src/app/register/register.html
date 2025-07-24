@@ -1,0 +1,97 @@
+<div class="register-wrapper">
+  <mat-card class="register-card">
+    <mat-card-header class="register-card-header">
+      <mat-card-title>
+        <mat-icon color="primary" class="register-icon">person_add</mat-icon>
+        Register
+      </mat-card-title>
+      <mat-card-subtitle>Create your new account</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            type="text"
+            id="username"
+            [(ngModel)]="user.username"
+            name="username"
+            required
+            #usernameInput="ngModel"
+          />
+          <mat-icon matSuffix color="accent">person</mat-icon>
+          <mat-error *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
+            Please enter a username.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            id="email"
+            [(ngModel)]="user.email"
+            name="email"
+            required
+            email
+            #emailInput="ngModel"
+          />
+          <mat-icon matSuffix color="accent">email</mat-icon>
+          <mat-error *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+            <span *ngIf="emailInput.errors?.['required']">Please enter an email address.</span>
+            <span *ngIf="emailInput.errors?.['email']">Please enter a valid email address.</span>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            id="password"
+            [(ngModel)]="user.password"
+            name="password"
+            required
+            #passwordInput="ngModel"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePassword"
+            type="button"
+          >
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
+            Please enter a password.
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
+            Register
+          </button>
+        </div>
+      </form>
+
+      <p *ngIf="successMessage" class="success-message">
+        <mat-icon class="success-icon">check_circle_outline</mat-icon>
+        {{ successMessage }}
+      </p>
+      <p *ngIf="errorMessage" class="error-message">
+        <mat-icon class="error-icon">error_outline</mat-icon>
+        {{ errorMessage }}
+      </p>
+
+    </mat-card-content>
+
+    <mat-card-footer class="register-card-footer">
+      <p>Already have an account? <a routerLink="/login" mat-button color="accent">Login here</a></p>
+    </mat-card-footer>
+  </mat-card>
+</div>

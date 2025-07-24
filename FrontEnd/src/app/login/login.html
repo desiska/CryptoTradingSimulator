@@ -1,0 +1,89 @@
+<!--<div>
+  <h2>Login</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" [(ngModel)]="user.username" name="username" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" [(ngModel)]="user.password" name="password" required>
+    </div>
+    <button type="submit" matIconButton="tonal">Login</button>
+  </form>
+  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+  <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+</div>-->
+
+<div class="login-wrapper">
+  <mat-card class="login-card">
+    <mat-card-header class="login-card-header">
+      <mat-card-title>
+        <mat-icon color="primary" class="login-icon">lock</mat-icon>
+        Login
+      </mat-card-title>
+      <mat-card-subtitle>Access your account</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            id="username"
+            [(ngModel)]="user.username"
+            name="username"
+            required
+            #usernameInput="ngModel"
+          />
+          <mat-icon matSuffix color="accent">person</mat-icon>
+          <mat-error *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
+            Please enter a username.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="hide() ? 'password' : 'text'"
+            id="password"
+            [(ngModel)]="user.password"
+            name="password"
+            required
+            #passwordInput="ngModel"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="clickEvent($event)"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide()"
+            type="button" >
+            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
+            Please enter a password.
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
+            Login
+          </button>
+        </div>
+      </form>
+
+      <p *ngIf="errorMessage" class="error-message">
+        <mat-icon class="error-icon">error_outline</mat-icon>
+        {{ errorMessage }}
+      </p>
+
+    </mat-card-content>
+
+    <mat-card-footer class="login-card-footer">
+      <p>Don't have an account? <a routerLink="/register" mat-button color="accent">Register here</a></p>
+      </mat-card-footer>
+  </mat-card>
+</div>

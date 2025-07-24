@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+  <span>Crypto trading app</span>
+
+  <span class="spacer"></span> 
+  
+  <button mat-button (click)="navigateToRegister()" *ngIf="!isLoggedIn">Register</button>
+  <button mat-button (click)="navigateToLogin()" *ngIf="!isLoggedIn">Login</button>
+  
+   <span *ngIf="isLoggedIn && currentUser && currentUser.balance !== null">
+    Balance: {{ currentUser.balance | number:'1.2-2' }} USD
+  </span>
+  
+  <button mat-button color="warn" (click)="reset()" *ngIf="isLoggedIn" title="Reset Account Data">
+    <mat-icon>refresh</mat-icon> Reset
+  </button>
+
+  <button mat-button (click)="navigateToKrakenAPI()" *ngIf="isLoggedIn">Kraken API</button>
+  <button mat-button (click)="navigateToTransactions()" *ngIf="isLoggedIn">Transactions</button>
+  <button mat-button (click)="navigateToWallet()" *ngIf="isLoggedIn">Wallet</button>
+  <button mat-button (click)="logout()" *ngIf="isLoggedIn">Logout</button>
+</mat-toolbar>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

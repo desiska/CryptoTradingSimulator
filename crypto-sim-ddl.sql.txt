@@ -1,0 +1,27 @@
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    balance DECIMAL(19, 8) DEFAULT 10000.00
+);
+
+CREATE TABLE user_currency (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    currency VARCHAR(10) NOT NULL,
+    quantity DECIMAL(19, 8) DEFAULT 0.00,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE (user_id, currency)
+);
+
+CREATE TABLE transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    type ENUM('BUYING','SELLING','RESETTING') NOT NULL,
+    currency VARCHAR(10) NOT NULL,
+    price DECIMAL(19, 8) NOT NULL,
+    quantity DECIMAL(19, 8) NOT NULL,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);

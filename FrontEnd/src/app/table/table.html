@@ -1,0 +1,41 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Kraken Live Ticker Data</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="bid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Bid </th>
+        <td mat-cell *matCellDef="let element"> {{element.bid | number:'1.2-8'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ask">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ask </th>
+        <td mat-cell *matCellDef="let element"> {{element.ask | number:'1.2-8'}} </td>
+      </ng-container>
+
+      <ng-container *ngIf="isLoggedIn()">
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button color="primary" (click)="buy(element)"> Buy </button>
+            <button mat-raised-button color="warn" (click)="sell(element)" style="margin-left: 8px;"> Sell </button>
+          </td>
+        </ng-container>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div *ngIf="dataSource.data.length === 0" class="no-data-message">
+      No ticker data available. Ensure the backend is running and connected to Kraken.
+    </div>
+  </mat-card-content>
+</mat-card>
